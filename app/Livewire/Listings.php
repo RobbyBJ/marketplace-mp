@@ -2,7 +2,6 @@
 
 namespace App\Livewire;
 
-use Carbon\Carbon;
 use App\Models\Listing;
 use Livewire\Component;
 
@@ -31,7 +30,7 @@ class Listings extends Component
     public function delete($listingId) {
         $listing = Listing::find($listingId);
         $listing->delete();
-        $this->listings = $this->listingss->reject(fn($c) => $c->id === $listingId);
+        $this->listings = $this->listings->reject(fn($c) => $c->id === $listingId);
 
     }
 
