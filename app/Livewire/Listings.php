@@ -4,13 +4,19 @@ namespace App\Livewire;
 
 use App\Models\Listing;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 
 class Listings extends Component
-{   
-    public $listings;
-    public $newListing;
+{  
+    use WithFileUploads;
 
+    public $listings;
+    public $image;
+    public $title;
+    public $price;
+    public $condition;
+    public $description;
 
     public function mount() {
         $default = Listing::latest()->get();
@@ -19,11 +25,30 @@ class Listings extends Component
 
     public function addListing() {
         
-        $this->validate(['newListing' => 'required|min:5|max:255']);
+        $imagePath = $this->image ? $this->image->store('photos', 'public') : null;
 
-        $createdListing = Listing::create(['body' => $this->newListing, 'user_id' => 1]);
+        $this->validate([
+            'image'=> 'nullable|image|max:2048',
+            'title' => 'required',
+            'price' => 'required|numeric|min:0',
+            'condition' => 'required|in:new,used,refurbished',
+            'description' => 'required|min:5|max:255'
+        
+        ]);
+        
+
+        $createdListing = Listing::create([
+            'image'=> $imagePath,
+            'title' => $this->title,
+            'price' => $this->price,
+            'condition' => $this->condition,
+            'description' => $this->description, 
+            'user_id' => 1
+        
+        ]);
+
         $this->listings->prepend($createdListing);
-        $this->newListing = "";
+        $this->description = "";
         session()->flash('message', 'Listing added succesfully!');
     }   
 

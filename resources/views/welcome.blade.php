@@ -12,6 +12,25 @@
     <livewire:styles />
 </head>
 <body>
+    <nav class="bg-red-700 p-4 text-white">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold">SellEase</a>
+            <ul class="flex space-x-10">
+                <li><a href="#" class="hover:underline">Home</a></li>
+                <li><a href="#" class="hover:underline">About</a></li>
+                <li><a href="#" class="hover:underline">Services</a></li>
+                <li><a href="#" class="hover:underline">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-10 px-4">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-gray-800">Welcome to SellEase</h1>
+            <p class="mt-4 text-gray-600"> Where Selling Meets Easing - Your Marketplace, Your Way.</p>
+            <a href="#" class="mt-6 inline-block bg-red-700 text-white px-6 py-2 rounded-lg hover:bg-red-900">Get Started</a>
+        </div>
+    </div>
     <livewire:listings />
     <livewire:scripts />
 </body>

@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('listings', function (Blueprint $table) {
             $table->id();
-            $table->text('body');
+            $table->text('title');
+            $table->text('price');
+            $table->text('condition');
+            $table->text('description');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->string('image')->nullable();
         });
     }
 
