@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use App\Models\User;
+
 
 class Login extends Component
 {   
@@ -12,18 +14,24 @@ class Login extends Component
     public $email;
     public $password;
 
+    public function mount() {
+        $default = User::latest()->get();
+        $this->users = $default;
+    }
+
     public function register() {
+        
         $this->validate([
             'name'=>'required',
             'email'=>'required|email',
-            'password'=>'required|min:6|confirmed'
+            'password'=>'required|min:6'
 
         ]);
 
         $createdUser = User::create([
             'name'=>$this->name,
             'email'=>$this->email,
-            'password'=>$this->password
+            'password'=>bcrypt($this->password)
 
         ]);
 

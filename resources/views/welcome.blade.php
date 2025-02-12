@@ -31,7 +31,7 @@
             <a href="#" class="mt-6 inline-block bg-red-700 text-white px-6 py-2 rounded-lg hover:bg-red-900">Get Started</a>
         </div>
     </div>
-    <livewire:listings />
+    <livewire:login />
     <livewire:scripts />
 </body>
 </html>
