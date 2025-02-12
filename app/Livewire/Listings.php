@@ -49,7 +49,7 @@ class Listings extends Component
 
         $this->listings->prepend($createdListing);
         $this->description = "";
-        session()->flash('message', 'Listing added succesfully!');
+        session()->flash('message', 'Listing added successfully!');
     }   
 
     public function delete($listingId) {

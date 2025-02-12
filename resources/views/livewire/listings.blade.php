@@ -61,7 +61,8 @@
                 <select 
                     class='w-full rounded border shadow p-2 mr-2' 
                     wire:model.lazy="condition"
-                >
+                >   
+            
                     <option value="new" selected>Brand New</option>
                     <option value="used">Like New</option>
                     <option value="used">Lightly Used</option>
