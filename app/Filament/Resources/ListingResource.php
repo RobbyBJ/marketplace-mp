@@ -23,7 +23,14 @@ class ListingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Textarea::make('listings'),
+                Forms\Components\TextInput::make('title') 
+                    ->required(),
+                Forms\Components\TextInput::make('price') 
+                    ->required(),
+                Forms\Components\TextInput::make('condition')
+                    ->required(),
+                Forms\Components\Textarea::make('description') 
+                    ->required(),
             ]);
     }
 
@@ -31,7 +38,16 @@ class ListingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Listings')
+                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('price') 
+                    ->searchable()
+                    ->money('myr'), 
+                Tables\Columns\TextColumn::make('condition') 
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description') 
+                    ->limit(50) 
+                    ->searchable(),
             ])
             ->filters([
                 //

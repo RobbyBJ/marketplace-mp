@@ -12,12 +12,6 @@ Route::get('/', function () {
 });
 
 Route::get('/home', Home::class)->name('home');
-
-// Registration Page
 Route::get('/register', Register::class)->name('register');
-
-// Login Page
 Route::get('/login', Login::class)->name('login');
-
-// Listings Page (assuming you have a Listings component)
 Route::get('/listings', Listings::class)->name('listings')->middleware('auth');
