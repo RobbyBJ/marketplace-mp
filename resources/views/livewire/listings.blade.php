@@ -109,11 +109,7 @@
                             style="max-width: 20%; height: auto; display: block; object-fit: cover;">
                     @endif
                 </div>
-                
-                <i class="fas fa-times text-red-200 hover:text-red-600 cursor-pointer"
-                wire:click="delete({{$listing->id}})"></i>
 
-                <p class='text-gray-800'>{{ $listing->body }}</p>
                 <p class='text-gray-800'><strong>Title:</strong> {{ ucfirst($listing->title) }}</p>
                 <p class='text-gray-800'><strong>Price:</strong> RM{{ number_format($listing->price, 2) }}</p>
                 <p class='text-gray-800'><strong>Condition:</strong> {{ ucfirst($listing->condition) }}</p>
