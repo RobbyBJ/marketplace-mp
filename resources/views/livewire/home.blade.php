@@ -1,14 +1,14 @@
 <div>
-    <div class="min-h-screen flex items-center justify-center">
-        <button class="p-2 mt-6 bg-red-700 rounded shadow text-white rounded-xs" wire:click="sell">
+    <div class="mt-12 flex items-center justify-center">
+        <button class="p-2 bg-red-700 rounded shadow text-white rounded-xs" wire:click="sell">
             Start Selling
         </button>
     </div>
-    <div class="text-center py-16 mt-10">
+    <div class="text-center py-16">
         <h1 class="text-4xl font-bold text-red mb-4 ">
             Welcome to the Marketplace
         </h1>
-        <h3 class="text-sm text-blue font-semibold text-gray-200">
+        <h3 class="text-sm font-semibold text-gray-100">
             Here you can see what others are putting up for sale!
         </h3>
     </div>
