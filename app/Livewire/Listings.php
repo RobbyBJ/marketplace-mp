@@ -15,12 +15,11 @@ class Listings extends Component
     public $image;
     public $title;
     public $price;
-    public $condition;
+    public $condition = "";
     public $description;
 
     public function mount() {
-        $default = Listing::latest()->get();
-        $this->listings = $default;
+        $this->listings = Listing::where('user_id', auth()->id())->latest()->get();
     }
 
     public function addListing() {
@@ -31,7 +30,7 @@ class Listings extends Component
             'image'=> 'nullable|image|max:2048',
             'title' => 'required',
             'price' => 'required|numeric|min:0',
-            'condition' => 'required|in:new,used,refurbished',
+            'condition' => 'required|in:new,like_new,used,well_used,damaged',
             'description' => 'required|min:5|max:255'
         
         ]);
@@ -43,24 +42,33 @@ class Listings extends Component
             'price' => $this->price,
             'condition' => $this->condition,
             'description' => $this->description, 
-            'user_id' => 1
+            'user_id' => auth()->id()
         
         ]);
 
         $this->listings->prepend($createdListing);
-        $this->description = "";
+        $this->reset(['title', 'price', 'condition', 'description', 'image']);
         session()->flash('message', 'Listing added successfully!');
     }   
 
     public function delete($listingId) {
-        $listing = Listing::find($listingId);
-        $listing->delete();
-        $this->listings = $this->listings->reject(fn($c) => $c->id === $listingId);
+        $listing = Listing::where('user_id', auth()->id())->find($listingId);
+
+        if ($listing) {
+            $listing->delete();
+            $this->listings = $this->listings->reject(fn($c) => $c->id === $listingId);
+            session()->flash('message', 'Listing deleted successfully!');
+        } 
+        
+        else {
+        session()->flash('error', 'You are not authorized to delete this listing.');
+        }
 
     }
 
+
     public function render()
     {
-        return view('livewire.listings');
+        return view('livewire.listings')->layout('layouts.app');
     }
 }

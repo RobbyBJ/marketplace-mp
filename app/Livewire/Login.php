@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\User;
+use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class Login extends Component
@@ -19,30 +21,22 @@ class Login extends Component
         $this->users = $default;
     }
 
-    public function register() {
-        
-        $this->validate([
-            'name'=>'required',
-            'email'=>'required|email',
-            'password'=>'required|min:6'
-
+    public function login() {
+        $credentials = $this->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-
-        $createdUser = User::create([
-            'name'=>$this->name,
-            'email'=>$this->email,
-            'password'=>bcrypt($this->password)
-
-        ]);
-
-        $this->users->prepend($createdUser);
-        $this->description = "";
-        session()->flash('message', 'User added successfully!');
-
+    
+        if (Auth::attempt($credentials)) {
+            return redirect()->route('home')->with('success', 'Login successful!');
+        } else {
+            // Add an error message for invalid credentials
+            $this->addError('email', 'Invalid credentials');
+            return back()->with('error', 'Invalid email or password. Please try again.');
+        }
     }
-
     public function render()
     {
-        return view('livewire.login');
+        return view('livewire.login')->layout('layouts.app');
     }
 }
