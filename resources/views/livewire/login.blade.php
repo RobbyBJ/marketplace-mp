@@ -21,9 +21,11 @@
             @enderror
         </div>
 
-
         <div>
             <input type="password" class="w-full rounded border shadow p-2" placeholder="Password" wire:model="password">
+            @error('password')
+                <span class="text-red-500 text-xs">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>

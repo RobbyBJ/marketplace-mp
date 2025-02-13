@@ -12,19 +12,28 @@
         @endif
     </div>
 
-    <h1 class="mb-12 text-4xl text-decoration-line:underline">Register Today!</h1>
+    <h1 class="mb-12 font-bold text-4xl text-gray-800 underline decoration-red-500">Register Today!</h1>
 
     <div class="w-full max-w-sm space-y-4">
         <div>
             <input type="text" class="w-full rounded border shadow p-2" placeholder="Username" wire:model="name">
+            @error('name')
+                <span class="text-red-500 text-xs">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>
             <input type="text" class="w-full rounded border shadow p-2" placeholder="Email" wire:model="email">
+            @error('email')
+                <span class="text-red-500 text-xs">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>
             <input type="password" class="w-full rounded border shadow p-2" placeholder="Password" wire:model="password">
+            @error('password')
+                <span class="text-red-500 text-xs">{{ $message }}</span>
+            @enderror
         </div>
 
         <div>

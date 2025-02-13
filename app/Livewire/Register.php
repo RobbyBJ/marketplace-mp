@@ -37,7 +37,7 @@ class Register extends Component
             $this->users->prepend($createdUser);
             $this->reset(['name', 'email', 'password']);
             session()->flash('message', 'User added successfully!');
-            redirect()->route('home')->with('success', 'Registration successful!');
+            redirect()->route('login')->with('success', 'Registration successful!');
     
     }
     public function render()

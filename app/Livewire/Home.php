@@ -16,7 +16,7 @@ class Home extends Component
     {
         return view('livewire.home', [
         
-            'listings' => Listing::latest()->paginate(5)
+            'listings' => Listing::latest()->paginate(3)
 
         ])->layout('layouts.app');
     }
