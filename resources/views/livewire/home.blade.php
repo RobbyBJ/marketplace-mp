@@ -4,11 +4,11 @@
             Start Selling
         </button>
     </div>
-    <div class="text-center py-16">
+    <div class="text-center pt-6 pb-8">
         <h1 class="text-4xl font-bold text-red mb-4 ">
             Welcome to the Marketplace
         </h1>
-        <h3 class="text-sm font-semibold text-gray-100">
+        <h3 class="text-sm font-semibold text-gray-500">
             Here you can see what others are putting up for sale!
         </h3>
     </div>
