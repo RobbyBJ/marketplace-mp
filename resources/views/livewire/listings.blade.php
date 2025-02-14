@@ -1,6 +1,6 @@
 <div class='flex justify-center'>
     <div class='w-6/12'>
-        <button class="p-2">
+        <button >
             <i class="fas fa-arrow-left text-3xl text-gray-800" wire:click="back"></i>
         </button>
 
