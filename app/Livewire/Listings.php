@@ -68,6 +68,7 @@ class Listings extends Component
         }
 
     }
+    
     public function editListing($listingId)
     {
         $listing = Listing::where('user_id', auth()->id())->find($listingId);
