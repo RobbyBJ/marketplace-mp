@@ -54,7 +54,7 @@ class Listings extends Component
         session()->flash('message', 'Listing added successfully!');
     }   
 
-    public function delete($listingId) {
+    public function deleteListing($listingId) {
         $listing = Listing::where('user_id', auth()->id())->find($listingId);
 
         if ($listing) {
@@ -71,11 +71,6 @@ class Listings extends Component
     public function editListing($listingId)
     {
         $listing = Listing::where('user_id', auth()->id())->find($listingId);
-
-        if (!$listing) {
-            session()->flash('error', 'You are not authorized to edit this listing.');
-            return;
-        }
 
         $this->editingListingId = $listing->id;
         $this->title           = $listing->title;
@@ -133,7 +128,6 @@ class Listings extends Component
         session()->flash('message', 'Listing updated successfully!');
     }
 
-  
     public function cancelEdit()
     {
         $this->reset(['editingListingId', 'existingImage', 'title', 'price', 'condition', 'description', 'image']);
@@ -143,7 +137,6 @@ class Listings extends Component
     public function back() {
         redirect()->route('home');
     }
-
 
     public function render()
     {

@@ -134,7 +134,7 @@
                             <!-- Delete Button -->
                             <i 
                                 class='fas fa-times text-red-200 hover:text-red-600 cursor-pointer' 
-                                wire:click="delete({{ $listing->id }})"
+                                wire:click="deleteListing({{ $listing->id }})"
                             ></i>
                         </div>
                     </div>
