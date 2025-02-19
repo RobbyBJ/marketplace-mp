@@ -36,7 +36,7 @@
             @enderror
         </div>
 
-        <div>
+        <div  x-data  @keydown.enter.window="$wire.register">
             <button class="p-2 bg-red-700 w-full rounded shadow text-white" wire:click="register">Register</button>
         </div>
 
