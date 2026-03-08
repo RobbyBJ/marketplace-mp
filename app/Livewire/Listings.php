@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Listing;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 
 class Listings extends Component
