@@ -32,7 +32,7 @@
             <a href="/register" class="text-xs hover:underline">Not a member? Register here!</a>
         </div>
 
-        <div>
+        <div x-data  @keydown.enter.window="$wire.login">
             <button class="p-2 bg-red-700 w-full rounded shadow text-white" wire:click="login">Login</button>
         </div>
     </div>

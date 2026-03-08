@@ -1,6 +1,6 @@
 <div class='flex justify-center'>
     <div class='w-6/12'>
-        <button >
+        <button class="p-2 rounded-full hover:bg-gray-200 transition duration-300">
             <i class="fas fa-arrow-left text-3xl text-gray-800" wire:click="back"></i>
         </button>
 
@@ -113,7 +113,9 @@
             <button class='mb-4 p-2 bg-blue-700 w-20 rounded shadow text-white' wire:click="updateListing">Update</button>
             <button class='mb-4 p-2 bg-gray-700 w-20 rounded shadow text-white' wire:click="cancelEdit">Cancel</button>
         @else
+        <div x-data @keydown.enter.window="$wire.addListing">
             <button class='mb-4 p-2 bg-red-700 w-20 rounded shadow text-white' wire:click="addListing">Add</button>
+        </div>
         @endif
 
         <!-- Listings Display -->
