@@ -26,3 +26,21 @@ Route::get('/storage/{path}', function ($path) {
 
     return response()->file($fullPath);
 })->where('path', '.*');
+
+// Temporary Debug Route for Storage
+Route::get('/debug-storage', function () {
+    $path = '/tmp/storage';
+    if (!is_dir($path)) return "/tmp/storage does not exist";
+    
+    $files = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::SELF_FIRST
+    );
+    
+    $output = "<h1>Files in /tmp/storage:</h1><ul>";
+    foreach ($files as $name => $object) {
+        $output .= "<li>$name</li>";
+    }
+    $output .= "</ul>";
+    return $output;
+});

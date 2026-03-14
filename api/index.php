@@ -13,7 +13,8 @@ $onVercel = isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']);
 
 if ($onVercel) {
     $dirs = [
-        '/tmp/storage/app/public',
+        '/tmp/storage/app/public/photos',
+        '/tmp/storage/app/livewire-tmp',
         '/tmp/storage/framework/cache/data',
         '/tmp/storage/framework/sessions',
         '/tmp/storage/framework/views',
