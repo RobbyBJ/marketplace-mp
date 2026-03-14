@@ -20,29 +20,40 @@ Route::get('/debug-migrate', function () {
     try {
         $action = request('action');
         
-        if ($action === 'wipe') {
-            // Faster manual wipe to avoid Vercel timeouts
-            $tables = ['listings', 'users', 'jobs', 'cache', 'migrations', 'sessions', 'password_reset_tokens'];
+        // 1. List all current tables
+        $dbName = config('database.connections.mysql.database');
+        $tables = \Illuminate\Support\Facades\DB::select('SHOW TABLES');
+        $tableList = array_map(fn($t) => current((array)$t), $tables);
+        
+        $output = "<h1>Database: $dbName</h1>";
+        $output .= "<h3>Current Tables (" . count($tableList) . "):</h3>";
+        $output .= "<ul><li>" . implode("</li><li>", $tableList) . "</li></ul>";
+
+        if ($action === 'nuke') {
+            // Drop ALL tables dynamically
             \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-            foreach ($tables as $table) {
+            foreach ($tableList as $table) {
                 \Illuminate\Support\Facades\Schema::dropIfExists($table);
             }
             \Illuminate\Support\Facades\DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
-            return '<h1>Database Wiped</h1><p>The core tables were dropped. Now <a href="/debug-migrate?action=migrate">click here to run MIGRATE</a>.</p>';
+            return '<h1>Database Nuked</h1><p>All tables were dropped. Now <a href="/debug-migrate?action=migrate">click here to run MIGRATE</a>.</p>';
         }
 
-        $command = $action === 'fresh' ? 'migrate:fresh' : 'migrate';
-        \Illuminate\Support\Facades\Artisan::call($command, ['--force' => true]);
+        if ($action === 'migrate') {
+            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            $commandOutput = \Illuminate\Support\Facades\Artisan::output();
+            return "<h1>Migrate Output</h1><pre>$commandOutput</pre><hr><a href='/debug-migrate'>Back to Status</a>";
+        }
+
+        $output .= "<hr>";
+        $output .= "<a href='/debug-migrate?action=migrate' style='padding:10px;background:green;color:white;text-decoration:none;'>RUN MIGRATE</a> ";
+        $output .= "<a href='/debug-migrate?action=nuke' style='padding:10px;background:red;color:white;text-decoration:none;' onclick='return confirm(\"Are you sure? This deletes ALL data.\")'>NUKE ALL TABLES</a>";
         
-        return '<h1>Command: ' . $command . '</h1><pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>' . 
-               '<hr>' .
-               '<a href="/debug-migrate?action=migrate">Run Migrate</a> | ' .
-               '<a href="/debug-migrate?action=fresh">Run Migrate Fresh (Warning: Timeout prone)</a> | ' .
-               '<a href="/debug-migrate?action=wipe">Force Wipe (Fastest)</a>';
+        return $output;
     } catch (\Exception $e) {
-        return '<h1>Migration failed</h1><pre>' . $e->getMessage() . '</pre>' .
+        return '<h1>Database Error</h1><pre>' . $e->getMessage() . '</pre>' .
                '<hr>' .
-               '<a href="/debug-migrate?action=migrate">Try standard Migrate</a> | ' .
-               '<a href="/debug-migrate?action=wipe">Force Wipe (Use this if you get "Table already exists")</a>';
+               '<a href="/debug-migrate">Try Refreshing</a> | ' .
+               '<a href="/debug-migrate?action=nuke">Emergency Nuke (If nothing else works)</a>';
     }
 });
