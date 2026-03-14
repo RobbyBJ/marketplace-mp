@@ -20,5 +20,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         \Illuminate\Support\Facades\Schema::defaultStringLength(191);
+
+        if (isset($_SERVER['VERCEL'])) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }
