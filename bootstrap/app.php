@@ -17,9 +17,4 @@ $app = Application::configure(basePath: dirname(__DIR__))
         //
     })->create();
 
-// Vercel Support: Redirect storage to /tmp on serverless
-if (isset($_SERVER['VERCEL'])) {
-    $app->useStoragePath('/tmp/storage');
-}
-
 return $app;
