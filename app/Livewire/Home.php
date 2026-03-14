@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class Home extends Component
 {   
+    public $search = '';
 
     public function sell() {
         return redirect()->route('listings');
@@ -14,10 +15,15 @@ class Home extends Component
 
     public function render()
     {
-        return view('livewire.home', [
-        
-            'listings' => Listing::latest()->paginate(3)
+        $listings = Listing::with('user')
+            ->when($this->search, function ($query) {
+                $query->where('title', 'like', '%' . $this->search . '%');
+            })
+            ->latest()
+            ->paginate(9);
 
+        return view('livewire.home', [
+            'listings' => $listings
         ])->layout('layouts.app');
     }
 }
