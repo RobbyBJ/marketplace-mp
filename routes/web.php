@@ -18,9 +18,12 @@ Route::get('/listings', Listings::class)->name('listings')->middleware('auth');
 
 Route::get('/debug-migrate', function () {
     try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        return '<pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>';
+        $command = request('fresh') === 'yes' ? 'migrate:fresh' : 'migrate';
+        \Illuminate\Support\Facades\Artisan::call($command, ['--force' => true]);
+        return '<h1>Command: ' . $command . '</h1><pre>' . \Illuminate\Support\Facades\Artisan::output() . '</pre>' . 
+               '<br><a href="/debug-migrate?fresh=yes">Click here to run MIGRATE:FRESH (Wipe and restart)</a>';
     } catch (\Exception $e) {
-        return 'Migration failed: ' . $e->getMessage();
+        return '<h1>Migration failed</h1><pre>' . $e->getMessage() . '</pre>' .
+               '<br><a href="/debug-migrate?fresh=yes">Click here to run MIGRATE:FRESH (Wipe and restart)</a>';
     }
 });

@@ -13,8 +13,12 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
 
 // 3. Run Migrations BEFORE handling the request
 if (env('DB_AUTO_MIGRATE') === 'true') {
-    $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
-    Artisan::call('migrate', ['--force' => true]);
+    try {
+        $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+        Artisan::call('migrate', ['--force' => true]);
+    } catch (\Exception $e) {
+        // Silently fail so the app can still boot and show the debug route
+    }
 }
 
 // 4. Handle the incoming request
